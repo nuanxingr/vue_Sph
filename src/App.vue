@@ -3,7 +3,8 @@
     <Header></Header>
     <!-- 路由出口 -->
     <router-view></router-view>
-    <Footer></Footer>
+    <!-- 判断footer显示隐藏(通过路由元信息判断) -->
+    <Footer v-show="$route.meta.show"></Footer>
   </div>
 </template>
 

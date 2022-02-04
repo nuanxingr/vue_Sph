@@ -16,19 +16,24 @@ export default new VueRouter({
     {
       path: "/home",
       component: Home,
+      meta: { show: true },
     },
     {
       path: "/login",
       component: Login,
+      meta: { show: false },
     },
     {
       path: "/register",
       component: Register,
+      meta: { show: false },
     },
     {
-      path: "/search",
+      path: "/search/:keywod?",
       component: Search,
-    }, 
+      meta: { show: true },
+      name: "search",
+    },
     {
       path: "*",
       redirect: "/home", //重定向(注意重定向要写路径)

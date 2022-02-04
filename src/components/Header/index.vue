@@ -34,6 +34,7 @@
       <div class="searchArea">
         <form action="###" class="searchForm">
           <input
+            v-model="keywod"
             type="text"
             id="autocomplete"
             class="input-error input-xxlarge"
@@ -55,10 +56,28 @@
 export default {
   name: "",
   comments: {},
+  data() {
+    return {
+      keywod: "",
+    };
+  },
   methods: {
     goSearch() {
       // 编程式导航跳转到搜索页
-      this.$router.push("/search");
+      // 路由传参（字符串形式）
+      // this.$router.push(
+      //   "/search/" + this.keywod + "?k=" + this.keywod.toUpperCase()
+      // );
+      // 路由传参2（模板字符串形式）
+      // this.$router.push(
+      //   `/search/${this.keywod}?k=${this.keywod.toUpperCase()}`
+      // );
+      // // 路由对象形式（常用）
+      this.$router.push({
+        name: "search", //路由的路径名
+        params: { keywod: '' || undefined }, //如果params是空串的话，就用 undefined解决
+        query: { k: this.keywod.toUpperCase() },
+      });
     },
   },
 };

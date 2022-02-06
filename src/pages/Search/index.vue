@@ -1,13 +1,15 @@
 <template>
-  <div>我是搜索</div>
+  <div>
+    <div>{{ $route.params.keywod }}</div>
+    <div>{{ $route.query.k }}</div>
+  </div>
 </template>
 
 <script>
 export default {
-
-}
+  name: "",
+};
 </script>
 
 <style>
-
 </style>

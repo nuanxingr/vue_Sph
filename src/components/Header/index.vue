@@ -75,7 +75,7 @@ export default {
       // // 路由对象形式（常用）
       this.$router.push({
         name: "search", //路由的路径名
-        params: { keywod: '' || undefined }, //如果params是空串的话，就用 undefined解决
+        params: { keywod: this.keywod || undefined }, //如果params是空串的话，就用 undefined解决
         query: { k: this.keywod.toUpperCase() },
       });
     },

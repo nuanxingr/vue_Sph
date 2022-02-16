@@ -11,6 +11,8 @@ import Register from "@/pages/Register";
 import Search from "@/pages/Search";
 
 // 问题一（编程式导航路由传参连续点击报错）重写路由的实例
+
+// 先保存一份
 let originPush = VueRouter.prototype.push;
 let orisinReplace = VueRouter.prototype.replace;
 // 第一个参数是原来的push的路径地址，
@@ -22,6 +24,19 @@ VueRouter.prototype.push = function (location, resolve, reject) {
     originPush.call(this, location, resolve, reject);
   } else {
     originPush.call(
+      this,
+      location,
+      () => {},
+      () => {}
+    );
+  }
+};
+VueRouter.prototype.push = function (location, resolve, reject) {
+  if (resolve && reject) {
+    //这里的this是VueRouter()上的push方法
+    orisinReplace.call(this, location, resolve, reject);
+  } else {
+    orisinReplace.call(
       this,
       location,
       () => {},

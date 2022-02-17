@@ -4,7 +4,7 @@ import axios from "axios";
 import nprogress from "nprogress";
 // 引入进度条样式
 import "nprogress/nprogress.css";
-console.log(nprogress);
+// console.log(nprogress);
 
 // 利用axios的一个方法create,去创建一个axios的实例；
 // request就是axios，只是稍微配置一下

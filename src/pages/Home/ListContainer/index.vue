@@ -101,8 +101,24 @@
 </template>
 
 <script>
+// import { component } from "vue/types/umd";
+import { mapState } from "vuex";
 export default {
   name: "ListContainer",
+  data() {
+    return {};
+  },
+  mounted() {
+    // 派发接口给vuex
+    this.$store.dispatch("bannerList");
+  },
+  computed: {
+    ...mapState({
+      BannerList: (state) => {
+        return state.home.BannerList;
+      },
+    }),
+  },
 };
 </script>
 

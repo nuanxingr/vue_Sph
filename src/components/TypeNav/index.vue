@@ -3,11 +3,11 @@
   <div>
     <div class="type-nav">
       <div class="container">
-        <div @mouseleave="leaveIndex">
+        <div @mouseleave="leaveIndex" @mouseenter="isShow">
           <h2 class="all">全部商品分类</h2>
           <!-- 三级联动 -->
-          <div class="sort">
-            <div class="all-sort-list2">
+          <div class="sort" v-show="show">
+            <div class="all-sort-list2" @click="goSearch">
               <div
                 class="item"
                 v-for="(c1, index) in categoryList"
@@ -15,7 +15,12 @@
                 :class="{ cur: currentIndex == index }"
               >
                 <h3 @mouseenter="changIndex(index)">
-                  <a href="">{{ c1.categoryName }}</a>
+                  <a
+                    href="javascript:;"
+                    :data-categoryName="c1.categoryName"
+                    :data-category1Id="c1.categoryId"
+                    >{{ c1.categoryName }}</a
+                  >
                 </h3>
                 <!-- 二三级联动 -->
                 <div
@@ -29,14 +34,24 @@
                   >
                     <dl class="fore">
                       <dt>
-                        <a href="">{{ c2.categoryName }}</a>
+                        <a
+                          href="javascript:;"
+                          :data-categoryName="c2.categoryName"
+                          :data-category2Id="c2.categoryId"
+                          >{{ c2.categoryName }}</a
+                        >
                       </dt>
                       <dd>
                         <em
                           v-for="(c3, index) in c2.categoryChild"
                           :key="c3.categoryId"
                         >
-                          <a href="">{{ c3.categoryName }}</a>
+                          <a
+                            href="javascript:;"
+                            :data-categoryName="c3.categoryName"
+                            :data-category3Id="c3.categoryId"
+                            >{{ c3.categoryName }}</a
+                          >
                         </em>
                       </dd>
                     </dl>
@@ -62,6 +77,7 @@
 </template>
 
 <script>
+import { throttle } from "lodash";
 import { mapState } from "vuex";
 export default {
   name: "TypeNav",
@@ -69,11 +85,14 @@ export default {
     return {
       //背景颜色id
       currentIndex: -1,
+      show: true,
     };
   },
   mounted() {
-    //  通知vuex向服务器发送请求,储存到仓库中
-    this.$store.dispatch("categoryList");
+
+    if (this.$route.path != "/home") {
+      this.show = false;
+    }
   },
   computed: {
     ...mapState({
@@ -86,12 +105,53 @@ export default {
   },
   methods: {
     // 鼠标移入
-    changIndex(index) {
+    // throttle节流方法
+    changIndex: throttle(function (index) {
       this.currentIndex = index;
+    }, 50),
+
+    // 事件委托路由跳转传参
+    goSearch(event) {
+      // 获取节点
+      let element = event.target;
+      // console.log(element);
+      // 利用event内部的一个方法dataset获取自定义属性
+      console.log(element.dataset);
+      let { categoryname, category1id, category2id, category3id } =
+        element.dataset;
+
+      if (categoryname) {
+        // console.log(11);
+        let location = { name: "search" };
+        let query = { categoryname: categoryname };
+        if (category1id) {
+          query.category1id = category1id;
+        } else if (category2id) {
+          query.category2id = category2id;
+        } else if (category3id) {
+          query.category3id = category3id;
+        }
+        // 整理跳转数据
+        // 如果有params，就业携带上传过去
+        if(this.$route.params){
+          location.params=this.$route.params
+           location.query = query;
+
+        this.$router.push(location);
+        }
+       
+      }
+    },
+    // 鼠标移入
+    isShow() {
+      this.show = true;
     },
     // 鼠标移出
     leaveIndex() {
       this.currentIndex = -1;
+      if (this.$route.path != "/home") {
+        this.show = false;
+      }
     },
   },
 };

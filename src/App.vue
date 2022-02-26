@@ -18,9 +18,13 @@ export default {
     Header,
     Footer,
   },
+  mounted() {
+    //  通知vuex向服务器发送请求,储存到仓库中
+    this.$store.dispatch("categoryList");
+  },
 };
 </script>
-
+ 
 <style>
 /* #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;

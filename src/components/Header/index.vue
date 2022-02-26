@@ -73,11 +73,18 @@ export default {
       //   `/search/${this.keywod}?k=${this.keywod.toUpperCase()}`
       // );
       // // 路由对象形式（常用）
-      this.$router.push({
-        name: "search", //路由的路径名
-        params: { keywod: this.keywod || undefined }, //如果params是空串的话，就用 undefined解决
-        query: { k: this.keywod.toUpperCase() },
-      });
+
+      if (this.$route.query) {
+        //如果params是空串的话，就用 undefined解决
+        // query: { k: this.keywod.toUpperCase() },
+        let location = {
+          name: "search",
+          params: { keywod: this.keywod || undefined },
+        }; //路由的路径名
+        location.query=this.$route.query
+
+        this.$router.push(location);
+      }
     },
   },
 };

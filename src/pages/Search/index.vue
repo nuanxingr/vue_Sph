@@ -1,7 +1,8 @@
 <template>
   <div>
-    <div>{{ $route.params.keywod }}</div>
-    <div>{{ $route.query.k }}</div>
+    <TypeNav></TypeNav>
+    <!-- <div>{{ $route.params.keywod }}</div>
+    <div>{{ $route.query.k }}</div> -->
   </div>
 </template>
 

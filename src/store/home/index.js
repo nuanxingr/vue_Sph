@@ -1,7 +1,8 @@
-import { reqCategoryList, reqBannerList } from "@/api";
+import { reqCategoryList, reqBannerList, reqFloorList } from "@/api";
 const state = {
   categoryList: [],
   BannerList: [],
+  FloorList: [],
 };
 const mutations = {
   // 第一个参数是state中的初始值，第二个是提交上来的数据
@@ -11,6 +12,9 @@ const mutations = {
   },
   BANNERLIST(state, BannerList) {
     state.BannerList = BannerList;
+  },
+  FLOORLIST(state, FloorList) {
+    state.FloorList = FloorList;
   },
 };
 const actions = {
@@ -32,6 +36,13 @@ const actions = {
     // console.log(result);
     if (result.code == 200) {
       commit("BANNERLIST", result.data);
+    }
+  },
+  async FloorList({ commit }) {
+    let result = await reqFloorList();
+    // console.log(result);
+    if (result.code == 200) {
+      commit("FLOORLIST", result.data);
     }
   },
 };

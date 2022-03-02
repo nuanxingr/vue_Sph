@@ -4,28 +4,7 @@
     <div class="sortList clearfix">
       <div class="center">
         <!--banner轮播-->
-        <div class="swiper-container" id="mySwiper">
-          <div class="swiper-wrapper">
-            <div class="swiper-slide">
-              <img src="./images/banner1.jpg" />
-            </div>
-            <!-- <div class="swiper-slide">
-              <img src="./images/banner2.jpg" />
-            </div>
-            <div class="swiper-slide">
-              <img src="./images/banner3.jpg" />
-            </div>
-            <div class="swiper-slide">
-              <img src="./images/banner4.jpg" />
-            </div> -->
-          </div>
-          <!-- 如果需要分页器 -->
-          <div class="swiper-pagination"></div>
-
-          <!-- 如果需要导航按钮 -->
-          <div class="swiper-button-prev"></div>
-          <div class="swiper-button-next"></div>
-        </div>
+        <carouses :list="BannerList"></carouses>
       </div>
       <div class="right">
         <div class="news">
@@ -101,8 +80,8 @@
 </template>
 
 <script>
-// import { component } from "vue/types/umd";
 import { mapState } from "vuex";
+
 export default {
   name: "ListContainer",
   data() {
@@ -119,6 +98,41 @@ export default {
       },
     }),
   },
+  // 监视属性
+  // watch: {
+  //   // 监听BannerList请求回来的数据
+  //   BannerList: {
+  //     // 必须要有handler法方法（内部必须的）
+  //     handler(newValue, oldValue) {
+  //       // 将回调延迟到下次 DOM 更新循环之后执行。在修改数据之后立即使用它，然后等待 DOM 更新。
+  //       // 等数据渲染完再执行
+  //       this.$nextTick(() => {
+  //         var mySwiper = new Swiper(this.$refs.mySwiper, {
+  //           //direction: 'vertical', // 垂直切换选项
+  //           loop: true, // 循环模式选项
+
+  //           // 如果需要分页器
+  //           pagination: {
+  //             el: ".swiper-pagination",
+  //             // 点击小球
+  //             clickavle: true,
+  //           },
+
+  //           // 如果需要前进后退按钮
+  //           navigation: {
+  //             nextEl: ".swiper-button-next",
+  //             prevEl: ".swiper-button-prev",
+  //           },
+
+  //           // 如果需要滚动条
+  //           scrollbar: {
+  //             el: ".swiper-scrollbar",
+  //           },
+  //         });
+  //       });
+  //     },
+  //   },
+  // },
 };
 </script>
 

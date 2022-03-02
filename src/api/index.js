@@ -12,3 +12,6 @@ export const reqCategoryList = () => {
 export const reqBannerList = () => {
   return mock({ url: "/banner", method: "get" });
 };
+export const reqFloorList = () => {
+  return mock({ url: "/floor", method: "get" });
+};

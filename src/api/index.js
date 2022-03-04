@@ -15,3 +15,7 @@ export const reqBannerList = () => {
 export const reqFloorList = () => {
   return mock({ url: "/floor", method: "get" });
 };
+// search模块请求地址
+export const reqGetsearchList = (params) => {
+  return requests({ url: "/list", method: "post", data: params });
+};

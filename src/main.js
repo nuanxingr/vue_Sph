@@ -16,6 +16,7 @@ import "swiper/css/swiper.css";
 // 注册全局组件
 // 第一个参数是组件名字
 // 第二个是哪个组件
+
 Vue.component(TypeNav.name, TypeNav);
 Vue.component(carouses.name, carouses);
 Vue.config.productionTip = false;
@@ -23,6 +24,10 @@ Vue.config.productionTip = false;
 // reqCategoryList();
 new Vue({
   render: (h) => h(App),
+  // 注册全局事件总线
+  beforeCreate(){
+    Vue.prototype.$bus=this
+  },
   // 注册路由
   router,
   store,

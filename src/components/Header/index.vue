@@ -61,6 +61,12 @@ export default {
       keywod: "",
     };
   },
+  mounted() {
+    // 通过search的通知全局事件总线清除关键字
+    this.$bus.$on("clear", () => {
+      this.keywod = "";
+    });
+  },
   methods: {
     goSearch() {
       // 编程式导航跳转到搜索页
@@ -81,7 +87,7 @@ export default {
           name: "search",
           params: { keywod: this.keywod || undefined },
         }; //路由的路径名
-        location.query=this.$route.query
+        location.query = this.$route.query;
 
         this.$router.push(location);
       }

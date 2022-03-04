@@ -116,7 +116,7 @@ export default {
       let element = event.target;
       // console.log(element);
       // 利用event内部的一个方法dataset获取自定义属性
-      console.log(element.dataset);
+      // console.log(element.dataset);
       let { categoryname, category1id, category2id, category3id } =
         element.dataset;
 

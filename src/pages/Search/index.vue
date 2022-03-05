@@ -23,11 +23,19 @@
               {{ searchParams.trademark.split(":")[1]
               }}<i @click="removeTrademark">×</i>
             </li>
+            <li
+              class="with-x"
+              v-for="(attrProps, index) in searchParams.props"
+              :key="index"
+            >
+              {{ attrProps.split(":")[1]
+              }}<i @click="removeAttrProps(index)">×</i>
+            </li>
           </ul>
         </div>
 
         <!--selector-->
-        <SearchSelector @trademarkInfo="trademarkInfo" />
+        <SearchSelector @trademarkInfo="trademarkInfo" @attrInfo="attrInfo" />
 
         <!--details-->
         <div class="details clearfix">
@@ -199,7 +207,7 @@ export default {
       // 地址栏还需要修改（跳转到自己就可以清空地址栏了）
       // 严谨：判断是否有params（也就是搜索栏有没有关键字）要保留
       if (this.$route.params) {
-        this.router.push({ name: "search", params: this.$route.params });
+        this.$router.push({ name: "search", params: this.$route.params });
       }
     },
     // 点击删除面包屑关键字
@@ -226,6 +234,23 @@ export default {
     // 点击删除品牌面包屑
     removeTrademark() {
       this.searchParams.trademark = "";
+      this.getDate();
+    },
+    // 获取子组件传过来的属性名和属性值
+    attrInfo(attr, attrvalue) {
+      console.log(attrvalue);
+      // 注意是由于data里面的props是数组不能直接this赋值 要创建一个变量整理好再push进去
+      let props = `${attr.attrId}:${attrvalue}:${attr.attrName}`;
+      // 数组去重防止渲染重复的属性名
+      if (this.searchParams.props.indexOf(props) == -1) {
+        this.searchParams.props.push(props);
+      }
+      // 治理好再次发送请求
+      this.getDate();
+    },
+    // 点击删除面包屑属性值
+    removeAttrProps(index) {
+      this.searchParams.props.splice(index, 1);
       this.getDate();
     },
   },

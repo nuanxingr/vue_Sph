@@ -42,13 +42,31 @@
           <div class="sui-navbar">
             <div class="navbar-inner filter">
               <ul class="sui-nav">
-                <li class="active">
-                  <a href="#">综合</a>
+                <li :class="{ active: isOne }">
+                  <a @click="changOrder(1)"
+                    >综合<span
+                      v-show="isOne"
+                      class="iconfont"
+                      :class="{
+                        'icon-long-arrow-up': isAsc,
+                        'icon-long-arrow-down': isDesc,
+                      }"
+                    ></span
+                  ></a>
                 </li>
-                <li>
-                  <a href="#">销量</a>
+                <li :class="{ active: isTwo }">
+                  <a @click="changOrder(2)"
+                    >综合<span
+                      v-show="isTwo"
+                      class="iconfont"
+                      :class="{
+                        'icon-long-arrow-up': isAsc,
+                        'icon-long-arrow-down': isDesc,
+                      }"
+                    ></span
+                  ></a>
                 </li>
-                <li>
+                <!-- <li>
                   <a href="#">新品</a>
                 </li>
                 <li>
@@ -59,7 +77,7 @@
                 </li>
                 <li>
                   <a href="#">价格⬇</a>
-                </li>
+                </li> -->
               </ul>
             </div>
           </div>
@@ -159,8 +177,8 @@ export default {
         categoryName: "",
         // 关键字
         keyword: "",
-        // 排序
-        order: "",
+        // 排序(默认是降序)
+        order: "1:desc",
         // 分页器
         pageNo: 1,
         // 代表展示个数
@@ -253,9 +271,42 @@ export default {
       this.searchParams.props.splice(index, 1);
       this.getDate();
     },
+
+    // 排序操作
+    changOrder(flag) {
+      let originOrder = this.searchParams.order;
+      // console.log(originFlag);
+      // 区别开是哪一个按钮
+      let originFlag = this.searchParams.order.split(":")[0];
+      let originSort = this.searchParams.order.split(":")[1];
+
+      // 判断点的是哪个按钮
+      let newOrder = "";
+      if (originFlag == flag) {
+        newOrder = `${originFlag}:${originSort == "desc" ? "asc" : "desc"}`;
+      } else {
+        newOrder = `${flag}:${"desc"}`;
+      }
+      // 修改数据并发送请求
+      this.searchParams.order = newOrder;
+      this.getDate();
+    },
   },
   computed: {
     ...mapGetters(["goodsList"]),
+    // 计算升降序类名
+    isOne() {
+      return this.searchParams.order.indexOf("1") != -1;
+    },
+    isTwo() {
+      return this.searchParams.order.indexOf("2") != -1;
+    },
+    isAsc() {
+      return this.searchParams.order.indexOf("asc") != -1;
+    },
+    isDesc() {
+      return this.searchParams.order.indexOf("desc") != -1;
+    },
   },
   // 监听路由信息
   watch: {

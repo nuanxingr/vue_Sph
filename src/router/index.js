@@ -1,14 +1,9 @@
 // 配置路由
 import Vue from "vue";
 import VueRouter from "vue-router";
-
+import routes from "./routers";
 // 安装路由插件
 Vue.use(VueRouter);
-// 引入路由组件
-import Home from "@/pages/Home";
-import Login from "@/pages/Login";
-import Register from "@/pages/Register";
-import Search from "@/pages/Search";
 
 // 问题一（编程式导航路由传参连续点击报错）重写路由的实例
 
@@ -46,37 +41,10 @@ VueRouter.prototype.push = function (location, resolve, reject) {
 };
 
 export default new VueRouter({
-  // 配置路由
-  routes: [
-    {
-      path: "/detail/:skuid",
-      component: Detail,
-      meta: { show: true },
-    },
-    {
-      path: "/home",
-      component: Home,
-      meta: { show: true },
-    },
-    {
-      path: "/login",
-      component: Login,
-      meta: { show: false },
-    },
-    {
-      path: "/register",
-      component: Register,
-      meta: { show: false },
-    },
-    {
-      path: "/search/:keywod?",
-      component: Search,
-      meta: { show: true }, //路由元信息
-      name: "search",
-    },
-    {
-      path: "*",
-      redirect: "/home", //重定向(注意重定向要写路径)
-    },
-  ],
+  routes,
+  //滚动行为
+  scrollBehavior(to, from, savedPosition) {
+    // 始终滚动到顶部
+    return { y: 0 };
+  },
 });

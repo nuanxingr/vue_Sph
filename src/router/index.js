@@ -49,6 +49,11 @@ export default new VueRouter({
   // 配置路由
   routes: [
     {
+      path: "/detail/:skuid",
+      component: Detail,
+      meta: { show: true },
+    },
+    {
       path: "/home",
       component: Home,
       meta: { show: true },

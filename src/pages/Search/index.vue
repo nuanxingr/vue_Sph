@@ -123,7 +123,7 @@
               </li>
             </ul>
           </div>
-          <div class="fr page">
+          <!-- <div class="fr page">
             <div class="sui-pagination clearfix">
               <ul>
                 <li class="prev disabled">
@@ -151,7 +151,15 @@
               </ul>
               <div><span>共10页&nbsp;</span></div>
             </div>
-          </div>
+          </div> -->
+          <!-- 分页器 -->
+          <Pagination
+            :pageNo="searchParams.pageNo"
+            :pageSize="searchParams.pageSize"
+            :total="total"
+            :continues="5"
+            @getPageNo="getPageNo"
+          ></Pagination>
         </div>
       </div>
     </div>
@@ -160,7 +168,7 @@
 
 <script>
 import SearchSelector from "./SearchSelector/SearchSelector";
-import { mapGetters } from "vuex";
+import { mapGetters, mapState } from "vuex";
 export default {
   name: "Search",
   data() {
@@ -291,6 +299,12 @@ export default {
       this.searchParams.order = newOrder;
       this.getDate();
     },
+    // 分页器传过来的pageNo（就是点击的那一页）
+    getPageNo(pageNo) {
+      // console.log(pageNo);
+      this.searchParams.pageNo = pageNo;
+      this.getDate();
+    },
   },
   computed: {
     ...mapGetters(["goodsList"]),
@@ -307,6 +321,10 @@ export default {
     isDesc() {
       return this.searchParams.order.indexOf("desc") != -1;
     },
+    // 获取search模块的展示产品一共多少数据
+    ...mapState({
+      total: (state) => state.search.GetsearchList.total,
+    }),
   },
   // 监听路由信息
   watch: {
